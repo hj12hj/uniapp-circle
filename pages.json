@@ -1,6 +1,8 @@
 {
   "easycom": {
-    "^tn-(.*)": "@/tuniao-ui/components/tn-$1/tn-$1.vue"
+    "^tn-(.*)": "@/tuniao-ui/components/tn-$1/tn-$1.vue",
+    "^fui-(.*)": "@/components/firstui/fui-$1/fui-$1.vue",
+    "^circle-(.*)": "@/pages/circle/circle-$1.vue"
   },
   "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
@@ -62,6 +64,27 @@
         "path": "loading",
         "style": {
           "navigationBarTitleText": "加载效果",
+          "enablePullDownRefresh": false
+        }
+      },
+      {
+        "path": "qrcode",
+        "style": {
+          "navigationBarTitleText": "二维码测试",
+          "enablePullDownRefresh": false
+        }
+      },
+      {
+        "path": "sliderCaptcha",
+        "style": {
+          "navigationBarTitleText": "滑块验证码",
+          "enablePullDownRefresh": false
+        }
+      },
+      {
+        "path": "drag",
+        "style": {
+          "navigationBarTitleText": "拖拽测试",
           "enablePullDownRefresh": false
         }
       }

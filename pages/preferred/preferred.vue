@@ -891,26 +891,26 @@
       },
       // 获取商品列表数据
       getRandomData() {
-        this.loadStatus = 'loading'
-        this.$api.preferred.productList({
-          page: this.pageNum,
-          pageSize: 10
-        }).then(res => {
-          if (res && res.length > 0) {
-            res.forEach(item => {
-              let price = this.getPrice(item.price)
-              item.priceInteger = price[0]
-              item.priceDecimal = price[1]
-            })
-            this.list.push(...res)
-            this.pageNum++
-          } else {
-            this.loadStatus = 'nomore'
-          }
-        }).catch(err => {
-          console.error('获取商品列表失败:', err)
-          this.loadStatus = 'loadmore'
-        })
+        // this.loadStatus = 'loading'
+      //   this.$api.preferred.productList({
+      //     page: this.pageNum,
+      //     pageSize: 10
+      //   }).then(res => {
+      //     if (res && res.length > 0) {
+      //       res.forEach(item => {
+      //         let price = this.getPrice(item.price)
+      //         item.priceInteger = price[0]
+      //         item.priceDecimal = price[1]
+      //       })
+      //       this.list.push(...res)
+      //       this.pageNum++
+      //     } else {
+      //       this.loadStatus = 'nomore'
+      //     }
+      //   }).catch(err => {
+      //     console.error('获取商品列表失败:', err)
+      //     this.loadStatus = 'loadmore'
+      //   })
       },
       // 瀑布流加载完毕事件
       handleWaterFallFinish() {

@@ -20,114 +20,41 @@
       </view>
     </tn-nav-bar>
     
-    <swiper class="card-swiper" @click="tn('/homePages/navigation')" :circular="true"
-      :autoplay="true" duration="500" interval="8000" @change="cardSwiper"> 
-      <swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
-        <view class="swiper-item image-banner">
-          <image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-        </view>
-        <view class="swiper-item-text">
-          <view class="tn-text-bold tn-color-white" style="font-size: 90rpx;">{{item.title}}</view>
-          <view class="tn-color-white tn-padding-top" style="font-size: 30rpx;">{{item.name}}</view>
-          <view class="tn-text-sm tn-text-bold tn-color-white tn-padding-top-sm tn-padding-bottom-sm">{{item.text}}</view>
-        </view>
-      </swiper-item>
-    </swiper>
-    <view class="indication">
-        <block v-for="(item,index) in swiperList" :key="index">
-            <view class="spot" :class="cardCur==index?'active':''"></view>
-        </block>
-    </view>
+    <tn-swiper
+      class="card-swiper"
+      :list="swiperList"
+      name="url"
+      :height="540"
+      :autoplay="true"
+      :interval="8000"
+      :duration="500"
+      :circular="true"
+      mode="dot"
+      indicatorPosition="bottomCenter"
+      imageMode="aspectFill"
+      @click="tn('/homePages/sliderCaptcha')"
+      @change="cardSwiper"
+    ></tn-swiper>
     
     
     <!-- 方式12 start-->
-    <view v-if="isAndroid" class="tn-flex tn-margin-xs tn-padding-top-sm">
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/homePages/hot')">
+    <fui-horizontal-scroll :marginTop="16" :marginBottom="16" :scroll="true">
+      <view 
+        v-for="item in navList" 
+        :key="item.id"
+        class="nav-item tn-padding-sm tn-margin-xs tn-radius" 
+        @click="tn(item.url)"
+      >
         <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-purplered--light tn-color-purplered">
-            <view class="tn-icon-fire-fill tn-three"></view>
+          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur" :class="[item.gradient, item.color]">
+            <view :class="[item.icon, 'tn-three']"></view>
           </view>  
           <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">热点资讯</text>
+            <text class="tn-text-ellipsis">{{ item.title }}</text>
           </view>
         </view>
       </view>
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/preferredPages/classify')">
-        <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-indigo--light tn-color-indigo">
-            <view class="tn-icon-flower-fill tn-three"></view>
-          </view>  
-          <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">商品分类</text>
-          </view>
-        </view>
-      </view>
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/circlePages/business')">
-        <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-purple--light tn-color-purple">
-            <view class="tn-icon-identity-fill tn-three"></view>
-          </view>  
-          <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">智能名片</text>
-          </view>
-        </view>
-      </view>
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/preferredPages/website')">
-        <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-orange--light tn-color-orange">
-            <view class="tn-icon-star-fill tn-three"></view>
-          </view>  
-          <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">星选门户</text>
-          </view>
-        </view>
-      </view>
-    </view>
-    <!-- 方式12 end-->
-    
-    <!-- 方式12 start-->
-    <view v-else class="tn-flex tn-margin-xs tn-padding-top-sm">
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/homePages/hot')">
-        <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-purplered--light tn-color-purplered">
-            <view class="tn-icon-fire-fill"></view>
-          </view>  
-          <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">热点资讯</text>
-          </view>
-        </view>
-      </view>
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/preferredPages/classify')">
-        <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-indigo--light tn-color-indigo">
-            <view class="tn-icon-flower-fill"></view>
-          </view>  
-          <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">商品分类</text>
-          </view>
-        </view>
-      </view>
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/circlePages/business')">
-        <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-purple--light tn-color-purple">
-            <view class="tn-icon-identity-fill"></view>
-          </view>  
-          <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">智能名片</text>
-          </view>
-        </view>
-      </view>
-      <view class="tn-flex-1 tn-padding-sm tn-margin-xs tn-radius" @click="tn('/preferredPages/website')">
-        <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-          <view class="icon12__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-shadow-blur tn-main-gradient-orange--light tn-color-orange">
-            <view class="tn-icon-star-fill"></view>
-          </view>  
-          <view class="tn-color-black tn-text-center">
-            <text class="tn-text-ellipsis">星选门户</text>
-          </view>
-        </view>
-      </view>
-    </view>
+    </fui-horizontal-scroll>
     <!-- 方式12 end-->
     
     <!-- banner start-->
@@ -152,67 +79,19 @@
       </view>
     </view> -->
     
-    <view class="tn-flex tn-flex-row-between tn-margin-top" @click="tn('/circlePages/business')">
-      <view class="justify-content-item tn-margin tn-text-bold tn-text-xxl">
-        推荐名片
-      </view>
-      <view class="justify-content-item tn-margin tn-text-lg tn-color-grey">
-        <text class="tn-padding-xs">全部</text>
-        <text class="tn-icon-topics"></text>
-      </view>
-    </view>
+    <section-title
+      class="tn-margin-top"
+      title="推荐名片"
+      @click="tn('/circlePages/business')"
+    ></section-title>
     
-    <swiper class="card-swiper2 tn-margin-top-sm" :circular="true"
-      :autoplay="false" duration="500" interval="5000" @change="resume"> 
-      <swiper-item v-for="(item,index) in resumeList" :key="index" :class="cardCur2==index?'cur':''" @click="tn('/circlePages/king')">
-        <!-- <view class="swiper-item image-banner">
-          <image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-        </view> -->
-        <view class="swiper-item1 image-banner tn-shadow-blur" :style="'background-image:url('+ item.url + ');width: 660rpx;height: 100%;background-size: cover;border-radius: 15rpx;'">
-        </view>
-        <view class="swiper-item2 image-banner tn-shadow-blur" :style="'background-image:url('+ item.avatar +');width: 120rpx;height: 120rpx;background-size: cover;'">
-        </view> 
-        <view class="swiper-item-text tn-text-shadow-indigo">
-          <view class="tn-text-bold tn-color-blue--dark" style="font-size: 45rpx;">{{item.title}}</view>
-          <view class="tn-color-blue--dark tn-padding-top-sm">{{item.name}}</view>
-          <view class="tn-flex tn-padding-top-xl" style="margin-left: -50rpx;">
-            <view class="tn-flex-1 tn-padding-sm tn-margin-right">
-              <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-                <view class="">
-                  <view class="tn-text-xxl tn-color-blue">{{item.hot}}</view>
-                </view>
-                <view class="tn-margin-top-xs tn-color-grey tn-text-df tn-text-center">
-                  <text class="tn-icon-fire"></text>
-                  <text class="tn-padding-left-xs">人气</text>
-                </view>
-              </view>
-            </view>
-            <view class="tn-flex-1 tn-padding-sm tn-margin-left tn-margin-right">
-              <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-                <view class="">
-                  <view class="tn-text-xxl tn-color-orange">{{item.share}}</view>
-                </view>
-                <view class="tn-margin-top-xs tn-color-grey tn-text-df tn-text-center">
-                  <text class="tn-icon-share-circle"></text>
-                  <text class="tn-padding-left-xs">分享</text>
-                </view>
-              </view>
-            </view>
-            <view class="tn-flex-1 tn-padding-sm tn-margin-left">
-              <view class="tn-flex tn-flex-direction-column tn-flex-row-center tn-flex-col-center">
-                <view class="">
-                  <view class="tn-text-xxl tn-color-red">{{item.love}}</view>
-                </view>
-                <view class="tn-margin-top-xs tn-color-grey tn-text-df tn-text-center">
-                  <text class="tn-icon-like"></text>
-                  <text class="tn-padding-left-xs">爱心</text>
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </swiper-item>
-    </swiper>
+    <resume-card
+      class="tn-margin-top-sm"
+      :list="resumeList"
+      :current="cardCur2"
+      @change="resume"
+      @click="tn('/circlePages/king')"
+    ></resume-card>
 <!--    <view class="indication">
         <block v-for="(item,index) in resumeList" :key="index">
             <view class="spot" :class="cardCur==index?'active':''"></view>
@@ -221,74 +100,26 @@
     
     
     <view class="">
-      <view class="tn-flex tn-flex-row-between" @click="tn('/activityPages/project')">
-        <view class="justify-content-item tn-margin tn-text-bold tn-text-xxl">
-          热门项目
-        </view>
-        <view class="justify-content-item tn-margin tn-text-lg tn-color-grey">
-          <text class="tn-padding-xs">全部</text>
-          <text class="tn-icon-topics"></text>
-        </view>
-      </view>
+      <section-title
+        title="热门项目"
+        @click="tn('/activityPages/project')"
+      ></section-title>
       
-      <view class="tn-flex tn-margin-left tn-margin-right tn-margin-top-sm" @click="tn('/circlePages/news')">
-        <view class="tn-flex-2">
-          <view class="image-pic tn-margin-right tn-shadow-blur" style="background-image:url('https://resource.tuniaokj.com/images/content/rodion.jpg')">
-            <view class="image-tuniao1">
-            </view>
-          </view> 
-        </view>
-        <view class="tn-flex-1">
-          <view class="image-pic tn-shadow-blur" style="background-image:url('https://resource.tuniaokj.com/images/shop/phonecase1.jpg')">
-            <view class="image-tuniao2">
-            </view>
-          </view> 
-          <view class="image-pic tn-margin-top tn-shadow-blur" style="background-image:url('https://resource.tuniaokj.com/images/shop/banner1.jpg')">
-            <view class="image-tuniao2">
-            </view>
-          </view> 
-        </view>
-      </view>
+      <image-wall
+        class="tn-margin-left tn-margin-right tn-margin-top-sm"
+        :leftImage="imageWallData.left.image"
+        :rightTopImage="imageWallData.rightTop.image"
+        :rightBottomImage="imageWallData.rightBottom.image"
+        @click="onImageWallClick"
+      ></image-wall>
       
       
-      <view class="tn-flex tn-flex-row-between tn-margin-top">
-        <view class="justify-content-item tn-margin tn-text-bold tn-text-xxl">
-          业务范围
-        </view>
-        <view class="justify-content-item tn-margin tn-text-lg tn-color-grey">
-          <text class="tn-padding-xs">全部</text>
-          <text class="tn-icon-topics"></text>
-        </view>
-      </view>
+      <section-title
+        class="tn-margin-top"
+        title="业务范围"
+      ></section-title>
       
-      <view class="tn-info__container tn-flex tn-flex-wrap tn-flex-col-center tn-flex-row-between tn-margin-left tn-margin-right">
-        <block v-for="(item, index) in tuniaoData" :key="index">
-          <view class="tn-info__item tn-flex tn-flex-direction-row tn-flex-col-center tn-flex-row-between tn-color-white tn-shadow-blur" :style="'background-color:'+ item.color +';'" @click="tn('/homePages/profession')">
-            <view class="tn-info__item__left tn-flex tn-flex-direction-row tn-flex-col-center tn-flex-row-left">
-              <!-- <view class="tn-info__item__left--icon tn-flex tn-flex-col-center tn-flex-row-center" :class="[`tn-bg-${item.color}--light tn-color-${item.color}`]">
-                <view :class="[`tn-icon-${item.icon}`]"></view>
-              </view> -->
-              <view class="tn-info__item__left__content">
-                <view class="tn-info__item__left__content--title tn-text-bold" style="font-size: 38rpx;">{{ item.title }}</view>
-                <view class="tn-info__item__left__content--data tn-padding-top-xs">
-                  {{ item.value }}
-                  <text class="tn-icon-right tn-padding-left-xs"></text>
-                </view>
-              </view>
-            </view>
-            <view class="tn-info__item__right">
-              <view class="tn-info__item__right--icon">
-                <view :class="[`tn-icon-${item.icon}`]"></view>
-              </view>
-            </view>
-            <view class="tn-info__item__bottom">
-              <view class='name tn-text-sm tn-color-gray' style="margin-left: -10rpx;">
-                <text class="tn-icon-code tn-padding-right-xs" style="opacity: 0;"></text>
-              </view>
-            </view>
-          </view>
-        </block>
-      </view>
+      <business-grid :list="tuniaoData" @click="onBusinessGridClick"></business-grid>
       
     </view>
 
@@ -304,6 +135,14 @@
       return {
         cardCur: 0,
         isAndroid: true,
+        navList: [
+          { id: 1, title: '热点资讯', url: '/homePages/hot', icon: 'tn-icon-fire-fill', gradient: 'tn-main-gradient-purplered--light', color: 'tn-color-purplered' },
+          { id: 2, title: '商品分类', url: '/preferredPages/classify', icon: 'tn-icon-flower-fill', gradient: 'tn-main-gradient-indigo--light', color: 'tn-color-indigo' },
+          { id: 3, title: '智能名片', url: '/circlePages/business', icon: 'tn-icon-identity-fill', gradient: 'tn-main-gradient-purple--light', color: 'tn-color-purple' },
+          { id: 4, title: '星选门户', url: '/preferredPages/website', icon: 'tn-icon-star-fill', gradient: 'tn-main-gradient-orange--light', color: 'tn-color-orange' },
+          { id: 5, title: '二维码', url: '/homePages/qrcode', icon: 'tn-icon-scan-fill', gradient: 'tn-main-gradient-blue--light', color: 'tn-color-blue' },
+          { id: 6, title: '拖拽测试', url: '/homePages/drag', icon: 'tn-icon-move-horizontal', gradient: 'tn-main-gradient-teal--light', color: 'tn-color-teal' },
+        ],
         swiperList: [{
           id: 0,
           type: 'image',
@@ -400,6 +239,22 @@
           url: 'https://resource.tuniaokj.com/images/resume/resume-bg.jpg',
         }],
 
+        // 图片墙数据
+        imageWallData: {
+          left: {
+            image: 'https://resource.tuniaokj.com/images/content/rodion.jpg',
+            url: '/circlePages/news'
+          },
+          rightTop: {
+            image: 'https://resource.tuniaokj.com/images/shop/phonecase1.jpg',
+            url: '/circlePages/news'
+          },
+          rightBottom: {
+            image: 'https://resource.tuniaokj.com/images/shop/banner1.jpg',
+            url: '/circlePages/news'
+          }
+        },
+
         tuniaoData: [
           {
             title: 'UI设计',
@@ -438,8 +293,8 @@
     },
     methods: {
       // cardSwiper
-      cardSwiper(e) {
-        this.cardCur = e.detail.current
+      cardSwiper(index) {
+        this.cardCur = index
       },
       // resume
       resume(e) {
@@ -450,6 +305,17 @@
       	uni.navigateTo({
       		url: e,
       	});
+      },
+      // 图片墙点击
+      onImageWallClick(type) {
+        console.log(type)
+        const item = this.imageWallData[type]
+        if (item && item.url) {
+          this.tn(item.url)
+        }
+      },
+      onBusinessGridClick(item) {
+        this.tn('/homePages/profession')
       },
     }
   }
@@ -525,105 +391,7 @@
     height: 100%;
   }
   
-  /* 轮播指示点 start*/
-  .indication{
-    z-index: 9999;
-    width: 100%;
-    height: 36rpx;
-    position: absolute;
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    justify-content:center;
-  }
   
-  .spot{
-    background-color: #FFFFFF;
-    opacity: 0.6;
-    width: 10rpx;
-    height: 10rpx;
-    border-radius: 20rpx;
-    top: -60rpx;
-    margin: 0 8rpx !important;
-    position: relative;
-  }
-  
-  .spot.active{
-    opacity: 1;
-    width: 30rpx;
-    background-color: #FFFFFF;
-  }
-  
-  /* 简历推荐 start */
-  .card-swiper2 {
-    height: 420rpx !important;
-    overflow: hidden;
-  }
-    
-  .card-swiper2 swiper-item {
-    width: 680rpx !important;
-    left: 30rpx;
-    box-sizing: border-box;
-    overflow: initial;
-    padding: 0 0rpx 40rpx 0;
-  }
-    
-  .card-swiper2 swiper-item .swiper-item1 {
-    width: 100%;
-    display: block;
-    height: 100%;
-    transform: scale(0.97);
-    transition: all 0.2s ease-in 0s;
-    will-change: transform;
-    background-color: #E7FAFE;
-  }
-    
-  .card-swiper2 swiper-item.cur .swiper-item1 {
-    transform: none;
-    transition: all 0.2s ease-in 0s;
-    will-change: transform;
-  }
-  
-  .card-swiper2 swiper-item .swiper-item2 {
-    margin-top: -180rpx;
-    width: 100%;
-    display: block;
-    height: 50%;
-    border-radius: 50%;
-    transform: translate(510rpx, -160rpx) scale(0.9, 0.9);
-    transition: all 0.3s ease 0s;
-    will-change: transform;
-  }
-    
-  .card-swiper2 swiper-item.cur .swiper-item2 {
-    margin-top: -180rpx;
-    width: 100%;
-    transform: translate(510rpx, -150rpx) scale(0.9, 0.9);
-    transition: all 0.3s ease 0s;
-    will-change: transform;
-  }
-
-  .card-swiper2 swiper-item .swiper-item-text {
-    margin-top: -270rpx;
-    width: 100%;
-    display: block;
-    height: 100%;
-    border-radius: 10rpx;
-    transform: translate(30rpx, -20rpx) scale(0.8, 0.8);
-    transition: all 0.6s ease 0s;
-    will-change: transform;
-    overflow: hidden;
-  }
-    
-  .card-swiper2 swiper-item.cur .swiper-item-text {
-    margin-top: -270rpx;
-    width: 100%;
-    transform: translate(20rpx, 0rpx) scale(0.9, 0.9);
-    transition: all 0.6s ease 0s;
-    will-change: transform;
-  }
-  
-
   
   /* 底部tabbar假阴影 start*/
   .bg-tabbar-shadow{
@@ -644,6 +412,13 @@
      left: 50%;
      transform: translate(-38rpx, -20rpx) rotateX(20deg) rotateY(10deg) rotateZ(-20deg);
      text-shadow: -1rpx 2rpx 0 #f0f0f0, -2rpx 4rpx 0 #f0f0f0, -10rpx 20rpx 30rpx rgba(0, 0, 0, 0.2);
+ }
+ .nav-item {
+     flex: 1;
+     min-width: 160rpx;
+     max-width: 200rpx;
+     background-color: #FFFFFF;
+     flex-shrink: 0;
  }
  .icon12 {
    &__item {
@@ -738,32 +513,6 @@
   /* 自定义导航栏内容 end */
   
 
-  /* 热门图片 start*/
-  .image-tuniao1{
-    padding: 165rpx 0rpx;
-    font-size: 40rpx;
-    font-weight: 300;
-    position: relative;
-  }
-  .image-tuniao2{
-    padding: 75rpx 0rpx;
-    font-size: 40rpx;
-    font-weight: 300;
-    position: relative;
-  }
-  .image-tuniao3{
-    padding: 90rpx 0rpx;
-    font-size: 40rpx;
-    font-weight: 300;
-    position: relative;
-  }
-  .image-pic{
-    background-size: cover;
-    background-repeat:no-repeat;
-    // background-attachment:fixed;
-    background-position:top;
-    border-radius: 10rpx;
-  }
   /* 胶囊banner*/
   .image-capsule{
     padding: 100rpx 0rpx;
